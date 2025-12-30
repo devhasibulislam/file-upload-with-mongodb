@@ -28,9 +28,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Server listening on port 3001 for incoming requests
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-  console.log(`Visit http://localhost:${port} to access the UI`);
-});
+// Export the Express app for Vercel
+module.exports = app;
+
+// Server listening on port 3001 for incoming requests (for local development)
+if (require.main === module) {
+  const port = process.env.PORT || 3001;
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+    console.log(`Visit http://localhost:${port} to access the UI`);
+  });
+}
